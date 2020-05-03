@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const octokit = github.GitHub(core.getInput('token'));
+const octokit = new github.GitHub(core.getInput('token'));
 
 const pending_state = "pending"
 const peding_description = "Please set the milestone!"
