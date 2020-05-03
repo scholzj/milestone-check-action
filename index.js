@@ -21,11 +21,11 @@ try {
                 console.log('Issue is a PR');
 
                 const repository = github.context.payload.repository;
-                const pr = octokit.pullRequests.get({owner: repository.owner.login, repo: repository.name, number: issue.number})
-
-                var owner = pr.data.base.repo.owner.login
-                var repo = pr.data.base.repo.name
-                var sha = pr.data.head.sha
+                const pr = octokit.pulls.get({owner: repository.owner.login, repo: repository.name, pull_number: issue.number})
+                
+                var owner = pr.base.repo.owner.login
+                var repo = pr.base.repo.name
+                var sha = pr.head.sha
 
                 if (issue.milestone == null)    {
                     console.log('Milestone is not set!');
