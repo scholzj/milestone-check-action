@@ -1,18 +1,19 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const octokit = new github.GitHub(core.getInput('token'));
+const { Octokit } = require("@octokit/rest");
+const octokit = Octokit(core.getInput('token'));
 
 const pending_state = "pending"
 const peding_description = "Please set the milestone!"
 const success_state = "success"
 const success_description = "Great, the milestone is set."
 
-function createStatus(owner, repo, sha, state, desc) {
+async function createStatus(owner, repo, sha, state, desc) {
     const status_context = core.getInput('status_context')
-    return octokit.repos.createStatus({owner: owner, repo: repo, sha: sha, state: state, description: desc, context: status_context})
+    return await octokit.repos.createStatus({owner: owner, repo: repo, sha: sha, state: state, description: desc, context: status_context})
 }
 
-try {
+async function checkMilestone()  {
     switch (github.context.eventName)   {
         case "issues":
             const issue = github.context.payload.issue;
@@ -32,10 +33,10 @@ try {
 
                 if (issue.milestone == null)    {
                     console.log('Milestone is not set!');
-                    return createStatus(owner, repo, sha, pending_state, peding_description)
+                    return await createStatus(owner, repo, sha, pending_state, peding_description)
                 } else {
                     console.log('Milestone is set');
-                    return createStatus(owner, repo, sha, success_state, success_description)
+                    return await createStatus(owner, repo, sha, success_state, success_description)
                 }
             } else {
                 console.log('Issue is not a PR');
@@ -51,21 +52,20 @@ try {
 
             if (pr.milestone == null)    {
                 console.log('Milestone is not set!');
-                return createStatus(owner, repo, sha, pending_state, peding_description)
+                return await createStatus(owner, repo, sha, pending_state, peding_description)
             } else {
                 console.log('Milestone is set');
-                return createStatus(owner, repo, sha, success_state, success_description)
+                return await createStatus(owner, repo, sha, success_state, success_description)
             }
 
             break;
         default:
             console.log("Unsupported event ${github.context.eventName}");
     }
+};
 
-    
-    
-    
-
+try {
+    checkMilestone()
 } catch (error) {
     console.log(`Something failed: ${error.message}`);
     core.setFailed(error.message);
