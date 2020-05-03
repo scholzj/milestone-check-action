@@ -6,7 +6,7 @@ try {
         case "issues":
             const issue = github.context.payload.issue;
             
-            if (issue.data.pull_request != null) {
+            if (issue.pull_request != null) {
                 console.log('Issue is a PR');
 
                 if (issue.milestone == null)    {
