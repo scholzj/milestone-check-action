@@ -6,8 +6,8 @@ inputs:
     default: "${{ github.token }}"
     required: true
   status_context:
-    description: The context for the status. Default is \"GithubActions - ${GITHUB_WORKFLOW}\"
-    default: "GithubActions - ${{ github.workflow }}"
+    description: The context for the status. Default is \"Milestone Check\"
+    default: "Milestone Check"
     required: true
 runs:
   using: 'node12'
