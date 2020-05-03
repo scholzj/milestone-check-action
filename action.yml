@@ -1,5 +1,14 @@
 name: 'Milestone Check'
 description: 'Check if any milestone is set in a GitHub PR'
+inputs:
+  token:
+    description: Auth token used to add status commits.
+    default: "${{ github.token }}"
+    required: true
+  status_context:
+    description: The context for the status. Default is \"GithubActions - ${GITHUB_WORKFLOW}\"
+    default: "GithubActions - ${{ github.workflow }}"
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'
