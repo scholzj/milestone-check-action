@@ -21,7 +21,7 @@ try {
                 console.log('Issue is a PR');
 
                 const repository = github.context.payload.repository;
-                const pr = await octokit.pullRequests.get({owner: repository.owner.login, repo: repository.name, number: issue.number})
+                const pr = octokit.pullRequests.get({owner: repository.owner.login, repo: repository.name, number: issue.number})
 
                 var owner = pr.data.base.repo.owner.login
                 var repo = pr.data.base.repo.name
