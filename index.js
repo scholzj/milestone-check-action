@@ -21,7 +21,7 @@ try {
                 console.log('Issue is a PR');
 
                 const repository = github.context.payload.repository;
-                const pr = octokit.pulls.get({owner: repository.owner.login, repo: repository.name, pull_number: issue.number})
+                const { data: pr } = await octokit.pulls.get({owner: repository.owner.login, repo: repository.name, pull_number: issue.number})
                 
                 const dump = JSON.stringify(pr, undefined, 2)
                 console.log(`The event payload: ${dump}`);
