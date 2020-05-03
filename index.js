@@ -23,6 +23,9 @@ try {
                 const repository = github.context.payload.repository;
                 const pr = octokit.pulls.get({owner: repository.owner.login, repo: repository.name, pull_number: issue.number})
                 
+                const dump = JSON.stringify(pr, undefined, 2)
+                console.log(`The event payload: ${dump}`);
+
                 var owner = pr.base.repo.owner.login
                 var repo = pr.base.repo.name
                 var sha = pr.head.sha
