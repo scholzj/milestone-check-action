@@ -38,5 +38,5 @@ jobs:
       id: milestone-check
       uses: scholzj/milestone-check-action@v1
       with:
-        status_context: 'Milestone Check Action'
+        status_context: 'Milestone Check'
 ```
