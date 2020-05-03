@@ -35,10 +35,6 @@ try {
             console.log("Unsupported event ${github.context.eventName}")
     }
 
-    if (github.context.eventName == "issues")   {
-
-    } else if ()
-
     const payload = JSON.stringify(github.context, undefined, 2)
     console.log(`The event payload: ${payload}`);
 } catch (error) {
